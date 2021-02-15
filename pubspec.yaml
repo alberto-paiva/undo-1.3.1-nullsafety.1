@@ -1,0 +1,18 @@
+name: undo
+description: A Undo/Redo Library for Flutter
+version: 1.3.1-nullsafety.0
+authors:
+  - Rody Davis <rody.davis.jr@gmail.com>
+  - Dan Shultz <schultz.t.dan@gmail.com>
+homepage: https://github.com/rodydavis/undo
+
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0-0 <3.0.0"
+
+dev_dependencies:
+  mockito: ^4.1.1
+  build_runner: ^1.0.0
+  build_version: ^2.0.0
+  test: any
