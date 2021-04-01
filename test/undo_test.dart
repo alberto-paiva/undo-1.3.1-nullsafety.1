@@ -8,6 +8,7 @@ void main() {
     group('initial state', () {
       test('is correct', () {
         final states = <int>[];
+        final testObject = SimpleStack(0, onUpdate: states.add);
         expect(SimpleStack(0, onUpdate: states.add).state, 0);
       });
     });
@@ -88,7 +89,7 @@ void main() {
             Duration.zero, () => testObject.modify(testObject.state + 1));
         await Future<void>.delayed(Duration.zero, testObject.undo);
 
-        expect(states, [0, 1]);
+        expect(states, [0, 1, 0]);
       });
 
       test('loses history outside of limit', () async {
@@ -101,7 +102,7 @@ void main() {
         await Future<void>.delayed(Duration.zero, testObject.undo);
         await Future<void>.delayed(Duration.zero, testObject.undo);
 
-        expect(states, [0, 1, 2, 1]);
+        expect(states, [0, 1, 2, 1, 0]);
       });
 
       test('reverts to initial state', () async {
