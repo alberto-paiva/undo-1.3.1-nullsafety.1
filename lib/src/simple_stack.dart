@@ -10,14 +10,15 @@ class SimpleStack<T> extends ChangeStack {
     this.limits,
     this.onUpdate,
   }) : super(limit: limits) {
-    modify(_state);
+    // modify(_state);
+    if (onUpdate != null) onUpdate!(_state);
   }
 
   /// Limit of changes to keep in history
 
   int? limits;
 
-  T _state;
+  late T _state;
 
   /// Current state
   T get state => _state;
@@ -26,7 +27,15 @@ class SimpleStack<T> extends ChangeStack {
 
   void Function(T val)? onUpdate;
 
-  void modify(T val) => add(Change(_state, () => _newValue(val), _newValue));
+  void modify(T val) {
+    add(
+      Change<T>(
+        _state,
+        () => _newValue(val),
+        (old) => _newValue(old),
+      ),
+    );
+  }
 
   void _newValue(T val) {
     _state = val;
