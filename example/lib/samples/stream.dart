@@ -23,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TrackedStreamController<int> _controller = TrackedStreamController(0);
+  final _controller = TrackedStreamController(0);
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             heroTag: ValueKey('add_button'),
             child: Icon(Icons.add),
             onPressed: () {
-              _controller.add((count as int) + 1);
+              _controller.add((count! as int) + 1);
             },
           ),
         );
@@ -91,14 +91,14 @@ class TrackedStreamController<T> implements StreamController<T> {
     this.onResume,
     bool sync = false,
   }) {
-    _streamController = StreamController<T>(
+    _streamController = StreamController(
       onCancel: onCancel,
       onListen: onListen,
       onPause: onPause,
       onResume: onResume,
       sync: sync,
     );
-    _simpleStack = SimpleStack<T>(value, limits: limit, onUpdate: (newVal) {
+    _simpleStack = SimpleStack(value, limits: limit, onUpdate: (newVal) {
       _streamController.add(newVal);
     });
   }
@@ -131,7 +131,7 @@ class TrackedStreamController<T> implements StreamController<T> {
   }
 
   @override
-  Future addStream(Stream<T> source, {bool? cancelOnError}) {
+  Future<void> addStream(Stream<T> source, {bool? cancelOnError}) async {
     return _streamController.addStream(source, cancelOnError: cancelOnError);
   }
 
