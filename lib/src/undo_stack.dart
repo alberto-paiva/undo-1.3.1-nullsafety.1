@@ -80,7 +80,7 @@ class Change<T> {
     this._oldValue,
     this._execute(),
     this._undo(T oldValue), {
-    this.description,
+    this.description = '',
   });
 
   final String? description;
