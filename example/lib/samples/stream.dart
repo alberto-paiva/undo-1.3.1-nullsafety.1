@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             heroTag: ValueKey('add_button'),
             child: Icon(Icons.add),
             onPressed: () {
-              _controller.add((count! as int) + 1);
+              _controller.add(count! + 1);
             },
           ),
         );
