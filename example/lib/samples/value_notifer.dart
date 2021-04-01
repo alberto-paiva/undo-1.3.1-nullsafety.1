@@ -21,13 +21,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TrackedValueNotifier _controller = TrackedValueNotifier(0);
+  final _controller = TrackedValueNotifier(0);
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _controller,
-      builder: (context, count, child) => Scaffold(
+      builder: (context, int count, child) => Scaffold(
         appBar: AppBar(
           title: Text('Undo/Redo Example'),
         ),
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
           heroTag: ValueKey('add_button'),
           child: Icon(Icons.add),
           onPressed: () {
-            _controller.value = (count as int) + 1;
+            _controller.value++;
           },
         ),
       ),
@@ -76,17 +76,14 @@ class TrackedValueNotifier<T> extends ValueNotifier<T> {
 
   TrackedValueNotifier(T val, {int? limit}) : super(val) {
     _simpleStack = SimpleStack<T>(val, limits: limit, onUpdate: (newVal) {
-      value = newVal;
+      super.value = newVal;
       notifyListeners();
     });
   }
 
   @override
   // ignore: avoid_return_types_on_setters
-  void set value(T newValue) {
-    _simpleStack.modify(newValue);
-    super.value = newValue;
-  }
+  set value(T newValue) => _simpleStack.modify(newValue);
 
   bool get canUndo => _simpleStack.canUndo;
   bool get canRedo => _simpleStack.canRedo;
